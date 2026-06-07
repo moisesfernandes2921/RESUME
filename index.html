@@ -1,0 +1,870 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Moisés Fernandes — Analista de Dados</title>
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
+<style>
+  :root{
+    --paper:#F5F4F0;
+    --paper-2:#EDEBE4;
+    --ink:#0C1A2E;
+    --ink-2:#22324a;
+    --red:#C8102E;
+    --red-deep:#9d0c24;
+    --muted:rgba(12,26,46,.58);
+    --line:rgba(12,26,46,.14);
+    --maxw:1240px;
+    --pad:clamp(20px,5vw,80px);
+    --serif:"Instrument Serif",Georgia,serif;
+    --sans:"Inter",system-ui,sans-serif;
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  html{scroll-behavior:smooth}
+  body{
+    background:var(--paper);
+    color:var(--ink);
+    font-family:var(--sans);
+    font-weight:400;
+    -webkit-font-smoothing:antialiased;
+    line-height:1.5;
+    overflow-x:hidden;
+  }
+  ::selection{background:var(--red);color:#fff}
+  a{color:inherit;text-decoration:none}
+
+  /* ---------- shared ---------- */
+  .wrap{max-width:var(--maxw);margin:0 auto;padding-left:var(--pad);padding-right:var(--pad)}
+  .serif{font-family:var(--serif);font-weight:400;line-height:.98;letter-spacing:-.01em}
+  .eyebrow{
+    font-size:12px;font-weight:600;letter-spacing:.18em;text-transform:uppercase;
+    display:inline-flex;align-items:center;gap:10px;color:var(--muted);
+  }
+  .eyebrow::before{content:"";width:7px;height:7px;border-radius:50%;background:var(--red);flex:0 0 auto}
+  .reveal{opacity:0;transform:translateY(34px);transition:opacity 1s cubic-bezier(.2,.7,.2,1),transform 1s cubic-bezier(.2,.7,.2,1)}
+  .reveal.in{opacity:1;transform:none}
+  .reveal.d1{transition-delay:.08s}.reveal.d2{transition-delay:.16s}.reveal.d3{transition-delay:.24s}.reveal.d4{transition-delay:.32s}
+  @media (prefers-reduced-motion:reduce){.reveal{opacity:1;transform:none;transition:none}}
+
+  /* ---------- navbar ---------- */
+  nav{
+    position:fixed;top:0;left:0;right:0;z-index:50;
+    display:flex;align-items:center;justify-content:space-between;
+    padding:22px var(--pad);
+    transition:background .5s ease,padding .5s ease,box-shadow .5s ease,color .5s ease;
+    color:#fff;mix-blend-mode:normal;
+  }
+  nav.scrolled{
+    background:rgba(245,244,240,.82);
+    backdrop-filter:blur(14px);-webkit-backdrop-filter:blur(14px);
+    color:var(--ink);
+    box-shadow:0 1px 0 var(--line);
+    padding-top:16px;padding-bottom:16px;
+  }
+  .brand{font-family:var(--serif);font-size:26px;letter-spacing:-.01em}
+  .navlinks{display:flex;align-items:center;gap:30px}
+  .navlinks a.lnk{
+    font-size:13.5px;font-weight:500;letter-spacing:.01em;position:relative;opacity:.9;
+  }
+  .navlinks a.lnk::after{content:"";position:absolute;left:0;bottom:-5px;height:1px;width:0;background:currentColor;transition:width .35s ease}
+  .navlinks a.lnk:hover{opacity:1}
+  .navlinks a.lnk:hover::after{width:100%}
+  .cta{
+    font-size:12px;font-weight:600;letter-spacing:.14em;text-transform:uppercase;
+    border:1px solid currentColor;border-radius:100px;padding:11px 20px;white-space:nowrap;
+    transition:background .3s ease,color .3s ease,border-color .3s ease,transform .3s ease;
+  }
+  nav:not(.scrolled) .cta:hover{background:#fff;color:var(--ink);border-color:#fff}
+  nav.scrolled .cta{background:var(--red);border-color:var(--red);color:#fff}
+  nav.scrolled .cta:hover{background:var(--red-deep);border-color:var(--red-deep)}
+  .dotsep{opacity:.5}
+  .menu-toggle{display:none}
+
+  /* ---------- hero ---------- */
+  .hero{position:relative;height:100svh;min-height:640px;width:100%;overflow:hidden;color:#fff;
+    background:linear-gradient(145deg,#0C1A2E 0%,#13233b 40%,#3a1222 74%,#C8102E 128%);}
+  .hero-media{position:absolute;inset:0;z-index:0;display:flex;justify-content:flex-end;align-items:flex-end}
+  .hero-media img{
+    height:100%;width:auto;max-width:74%;object-fit:cover;object-position:50% 12%;
+    filter:grayscale(1) contrast(1.06) brightness(.96);
+    will-change:transform;
+  }
+  .wash{position:absolute;inset:0;z-index:1;mix-blend-mode:color;opacity:.58;
+    background:linear-gradient(150deg,#0C1A2E 0%,#16263f 38%,#7a1830 72%,#C8102E 100%);}
+  .wash2{position:absolute;inset:0;z-index:2;mix-blend-mode:soft-light;opacity:.5;
+    background:linear-gradient(150deg,#0C1A2E 0%,transparent 50%,#C8102E 100%);}
+  .scrim{position:absolute;inset:0;z-index:3;
+    background:
+      linear-gradient(90deg,rgba(8,16,30,.92) 0%,rgba(8,16,30,.55) 30%,rgba(8,16,30,.06) 52%,rgba(8,16,30,0) 70%),
+      linear-gradient(180deg,rgba(8,16,30,.5) 0%,rgba(8,16,30,0) 26%,rgba(8,16,30,0) 46%,rgba(8,16,30,.74) 100%);}
+  .hero-inner{position:relative;z-index:5;height:100%;max-width:var(--maxw);margin:0 auto;
+    padding:0 var(--pad) clamp(38px,6vh,72px);display:flex;flex-direction:column;justify-content:flex-end}
+  .hero-loc{font-size:12.5px;font-weight:500;letter-spacing:.2em;text-transform:uppercase;opacity:.85;margin-bottom:20px;display:flex;align-items:center;gap:12px}
+  .hero-loc::before{content:"";width:26px;height:1px;background:rgba(255,255,255,.8)}
+  .hero h1{font-family:var(--serif);font-weight:400;letter-spacing:-.02em;line-height:.9;
+    font-size:clamp(58px,12.5vw,184px);text-shadow:0 2px 40px rgba(8,16,30,.35)}
+  .hero h1 em{font-style:italic;color:#fff}
+  .hero-foot{display:flex;flex-wrap:wrap;align-items:flex-end;justify-content:space-between;gap:24px;margin-top:26px}
+  .hero-role{font-size:clamp(15px,2vw,20px);max-width:30ch;font-weight:400;opacity:.92;line-height:1.45}
+  .hero-role b{font-weight:600}
+  .scrolldown{font-size:11px;letter-spacing:.22em;text-transform:uppercase;opacity:.8;display:flex;align-items:center;gap:10px;white-space:nowrap}
+  .scrolldown .ln{width:1px;height:34px;background:rgba(255,255,255,.6);position:relative;overflow:hidden;display:inline-block}
+  .scrolldown .ln::after{content:"";position:absolute;left:0;top:-34px;height:34px;width:100%;background:#fff;animation:drop 2.2s infinite ease-in-out}
+  @keyframes drop{0%{top:-34px}55%,100%{top:34px}}
+
+  /* ---------- section frame ---------- */
+  section{position:relative}
+  .sec{padding:clamp(80px,13vh,150px) 0}
+  .sec-head{display:flex;align-items:baseline;gap:18px;flex-wrap:wrap;margin-bottom:54px}
+  .sec-num{font-family:var(--serif);font-size:20px;color:var(--red)}
+  .h2{font-family:var(--serif);font-weight:400;letter-spacing:-.02em;line-height:.98;font-size:clamp(38px,6.4vw,84px)}
+  .lead{font-size:clamp(19px,2.3vw,26px);line-height:1.45;max-width:30ch;color:var(--ink);font-weight:300}
+  .lede-em{color:var(--red);font-style:italic;font-family:var(--serif);font-weight:400}
+
+  /* ---------- intro / sobre ---------- */
+  .intro-grid{display:grid;grid-template-columns:1.05fr .95fr;gap:clamp(40px,7vw,110px);align-items:start}
+  .intro-body p{font-size:clamp(16px,1.5vw,19px);color:var(--ink-2);line-height:1.7;margin-bottom:20px;max-width:46ch}
+  .intro-body p:last-child{margin-bottom:0}
+  .stats{display:grid;grid-template-columns:1fr;gap:0;border-top:1px solid var(--line)}
+  .stat{display:grid;grid-template-columns:auto 1fr;align-items:end;gap:22px;padding:26px 0;border-bottom:1px solid var(--line)}
+  .stat .big{font-family:var(--serif);font-size:clamp(56px,8vw,92px);line-height:.82;letter-spacing:-.02em}
+  .stat .big sup{font-size:.32em;vertical-align:top;color:var(--red);font-family:var(--sans);font-weight:600}
+  .stat .lab{padding-bottom:10px;font-size:13.5px;line-height:1.4;color:var(--muted);text-transform:uppercase;letter-spacing:.08em;font-weight:500}
+
+  /* ---------- expertise ---------- */
+  .exp-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:0;border-top:1px solid var(--line)}
+  .exp{padding:34px 30px 38px 0;border-bottom:1px solid var(--line);border-right:1px solid var(--line);position:relative;transition:background .4s ease}
+  .exp:nth-child(3n){border-right:none;padding-right:0}
+  .exp:hover{background:rgba(200,16,46,.035)}
+  .exp .n{font-family:var(--serif);font-size:15px;color:var(--red);letter-spacing:.04em}
+  .exp h3{font-family:var(--serif);font-weight:400;font-size:clamp(24px,2.6vw,32px);margin:14px 0 12px;letter-spacing:-.01em;line-height:1.04}
+  .exp p{font-size:14.5px;color:var(--muted);line-height:1.6;max-width:34ch}
+
+  /* ---------- evolução profissional ---------- */
+  .evoflow{display:grid;grid-template-columns:repeat(5,1fr);gap:0;margin-bottom:64px;position:relative}
+  .evoflow::before{content:"";position:absolute;left:0;right:0;top:13px;height:1px;background:var(--line);z-index:0}
+  .evo{position:relative;z-index:1;padding-right:18px}
+  .evo .dot{width:27px;height:27px;border-radius:50%;background:var(--paper);border:1px solid var(--line);display:flex;align-items:center;justify-content:center;margin-bottom:18px;transition:border-color .4s ease,background .4s ease}
+  .evo .dot span{width:7px;height:7px;border-radius:50%;background:var(--line);transition:background .4s ease}
+  .evo:last-child .dot{border-color:var(--red)}
+  .evo:last-child .dot span{background:var(--red)}
+  .evo .es{font-size:11px;font-weight:600;letter-spacing:.14em;text-transform:uppercase;color:var(--muted)}
+  .evo .et{font-family:var(--serif);font-size:clamp(19px,1.9vw,24px);line-height:1.05;letter-spacing:-.01em;margin-top:8px;max-width:11ch}
+  .evo.in .dot{border-color:var(--red)}
+  .evo.in .dot span{background:var(--red)}
+
+  /* ---------- diferencial ---------- */
+  .dif-top{display:grid;grid-template-columns:1fr 1fr;gap:clamp(40px,7vw,100px);align-items:start;margin-bottom:70px}
+  .dif-intro p:first-child{font-size:clamp(20px,2.4vw,28px);font-weight:300;line-height:1.4;color:var(--ink);margin-bottom:20px}
+  .dif-sub{font-size:clamp(15px,1.4vw,17px);color:var(--muted);line-height:1.72}
+
+  .pilares{display:grid;grid-template-columns:repeat(5,1fr);gap:0;border-top:1px solid var(--line);margin-bottom:80px}
+  .pilar{padding:36px 24px 36px 0;border-bottom:1px solid var(--line);border-right:1px solid var(--line);position:relative;
+    transition:background .45s ease,transform .45s cubic-bezier(.2,.7,.2,1)}
+  .pilar:last-child{border-right:none;padding-right:0}
+  .pilar::after{content:"";position:absolute;bottom:0;left:0;height:2px;width:0;background:var(--red);transition:width .5s cubic-bezier(.2,.7,.2,1)}
+  .pilar:hover{background:rgba(200,16,46,.025)}
+  .pilar:hover::after{width:calc(100% - 24px)}
+  .pilar:last-child:hover::after{width:100%}
+
+  .pilar-icon{width:48px;height:48px;border-radius:50%;border:1px solid var(--line);
+    display:flex;align-items:center;justify-content:center;color:var(--red);
+    margin-bottom:22px;transition:background .4s ease,border-color .4s ease,color .4s ease}
+  .pilar:hover .pilar-icon{background:var(--red);border-color:var(--red);color:#fff}
+
+  .pilar-body h3{font-family:var(--serif);font-weight:400;font-size:clamp(17px,1.6vw,21px);
+    line-height:1.08;letter-spacing:-.01em;margin-bottom:12px}
+  .pilar-body p{font-size:13px;color:var(--muted);line-height:1.62;margin-bottom:18px}
+
+  .pilar-tags{display:flex;flex-wrap:wrap;gap:6px;margin-top:20px;margin-bottom:14px}
+  .pilar-tags span{font-size:10.5px;font-weight:600;letter-spacing:.1em;text-transform:uppercase;
+    color:var(--muted);border:1px solid var(--line);border-radius:100px;padding:3px 9px;
+    transition:color .3s ease,border-color .3s ease}
+  .pilar:hover .pilar-tags span{color:var(--ink-2);border-color:rgba(12,26,46,.28)}
+
+  .pilar-badge{display:inline-flex;align-items:center;gap:6px;font-size:10.5px;font-weight:700;
+    letter-spacing:.1em;text-transform:uppercase;color:var(--red);margin-top:4px}
+  .pilar-badge::before{content:"";width:6px;height:6px;border-radius:50%;background:var(--red);
+    animation:pulse 2s ease-in-out infinite}
+  @keyframes pulse{0%,100%{opacity:1;transform:scale(1)}50%{opacity:.5;transform:scale(.7)}}
+
+  .dif-quote{display:flex;align-items:center;gap:40px;margin:0 0 0;padding:50px 0}
+  .dif-quote-line{flex:1;height:1px;background:var(--line)}
+  .dif-quote blockquote{font-family:var(--serif);font-weight:400;font-size:clamp(22px,2.8vw,36px);
+    line-height:1.18;letter-spacing:-.015em;text-align:center;max-width:24ch;flex:0 0 auto}
+  .dif-quote blockquote em{font-style:italic;color:var(--red)}
+
+  @media(max-width:1100px){.pilares{grid-template-columns:repeat(3,1fr)}.pilar:nth-child(3){border-right:none;padding-right:0}.pilar:nth-child(3)::after{width:100%!important}}
+  @media(max-width:920px){.dif-top{grid-template-columns:1fr;gap:28px}.pilares{grid-template-columns:1fr 1fr}.pilar:nth-child(odd){border-right:1px solid var(--line)}.pilar:nth-child(even){border-right:none;padding-right:0}.pilar:last-child{border-right:none}}
+  @media(max-width:600px){.pilares{grid-template-columns:1fr}.pilar{border-right:none!important;padding-right:0!important}.dif-quote{flex-direction:column;gap:24px}.dif-quote-line{width:60px;height:1px;flex:0 0 auto}}
+
+  /* ---------- carreira (acordeão) ---------- */
+  .career{border-top:1px solid var(--ink)}
+  .role{border-bottom:1px solid var(--line)}
+  .role-head{display:grid;grid-template-columns:64px 1fr auto 34px;gap:clamp(14px,3vw,40px);align-items:center;width:100%;
+    background:none;border:none;cursor:pointer;text-align:left;font:inherit;color:inherit;
+    padding:28px 6px;position:relative;transition:padding-left .45s cubic-bezier(.2,.7,.2,1),background .45s ease}
+  .role-head::before{content:"";position:absolute;left:0;top:0;bottom:0;width:3px;background:var(--red);transform:scaleY(0);transform-origin:bottom;transition:transform .45s cubic-bezier(.2,.7,.2,1)}
+  .role-head:hover{padding-left:24px;background:rgba(12,26,46,.025)}
+  .role-head:hover::before,.role[data-open="true"] .role-head::before{transform:scaleY(1)}
+  .role .jn{font-family:var(--serif);font-size:22px;color:var(--muted);transition:color .3s ease}
+  .role-head:hover .jn,.role[data-open="true"] .jn{color:var(--red)}
+  .role .jt{font-family:var(--serif);font-weight:400;font-size:clamp(22px,2.7vw,34px);letter-spacing:-.01em;line-height:1.04;display:block}
+  .role .jcomp{font-size:13.5px;color:var(--red);font-weight:500;letter-spacing:.01em;margin-top:6px;display:block}
+  .role .jc{font-size:13.5px;color:var(--muted);margin-top:5px;font-weight:500;letter-spacing:.02em;display:block}
+  .role .jp{font-size:13px;color:var(--muted);text-align:right;white-space:nowrap;letter-spacing:.04em;font-weight:500}
+  .role-plus{justify-self:end;width:30px;height:30px;border:1px solid var(--line);border-radius:50%;position:relative;flex:0 0 auto;transition:border-color .35s ease,transform .45s cubic-bezier(.2,.7,.2,1)}
+  .role-plus::before,.role-plus::after{content:"";position:absolute;left:50%;top:50%;width:11px;height:1.5px;background:var(--ink);transform:translate(-50%,-50%);transition:transform .4s cubic-bezier(.2,.7,.2,1),background .35s ease}
+  .role-plus::after{transform:translate(-50%,-50%) rotate(90deg)}
+  .role[data-open="true"] .role-plus{border-color:var(--red);transform:rotate(180deg)}
+  .role[data-open="true"] .role-plus::before,.role[data-open="true"] .role-plus::after{background:var(--red)}
+  .role[data-open="true"] .role-plus::after{transform:translate(-50%,-50%) rotate(0)}
+  .role-body{display:grid;grid-template-rows:0fr;transition:grid-template-rows .5s cubic-bezier(.2,.7,.2,1)}
+  .role[data-open="true"] .role-body{grid-template-rows:1fr}
+  .role-body-inner{overflow:hidden}
+  .role-body p{font-size:clamp(15px,1.45vw,17px);color:var(--ink-2);line-height:1.68;max-width:60ch;
+    padding:0 6px 32px 64px;opacity:0;transform:translateY(8px);transition:opacity .5s ease .1s,transform .5s ease .1s}
+  .role[data-open="true"] .role-body p{opacity:1;transform:none}
+  .role-list{list-style:none;padding:0 6px 32px 64px;opacity:0;transform:translateY(8px);transition:opacity .5s ease .1s,transform .5s ease .1s;max-width:64ch}
+  .role[data-open="true"] .role-list{opacity:1;transform:none}
+  .role-list li{position:relative;font-size:clamp(14px,1.35vw,16px);color:var(--ink-2);line-height:1.65;padding:12px 0 12px 22px;border-bottom:1px solid var(--line)}
+  .role-list li:last-child{border-bottom:none;padding-bottom:0}
+  .role-list li::before{content:"";position:absolute;left:0;top:20px;width:6px;height:6px;border-radius:50%;background:var(--red);flex-shrink:0}
+  .role-tag{display:inline-block;font-size:11px;font-weight:600;letter-spacing:.1em;text-transform:uppercase;color:var(--red);background:rgba(200,16,46,.07);border:1px solid rgba(200,16,46,.2);border-radius:4px;padding:2px 7px;margin-right:8px;vertical-align:middle;white-space:nowrap}
+
+  /* ---------- projetos ---------- */
+  .projects{display:flex;flex-direction:column;gap:0;border-top:1px solid var(--line)}
+  .proj{display:grid;grid-template-columns:.92fr 1.08fr;gap:clamp(28px,5vw,72px);align-items:center;padding:clamp(40px,6vh,70px) 0;border-bottom:1px solid var(--line)}
+  .proj:nth-child(even) .proj-media{order:-1}
+  .proj-media{position:relative;aspect-ratio:4/3;border-radius:6px;overflow:hidden;background:var(--ink)}
+  .proj-media img{display:block;width:100%;height:100%;object-fit:cover;object-position:50% 50%}
+  .proj-placeholder{display:flex;align-items:center;justify-content:center;width:100%;height:100%;background:linear-gradient(135deg,var(--ink) 0%,var(--ink-2) 100%)}
+  .proj-tag{position:absolute;left:16px;top:14px;z-index:3;font-size:11px;font-weight:600;letter-spacing:.16em;text-transform:uppercase;
+    color:#fff;background:rgba(8,16,30,.5);backdrop-filter:blur(6px);padding:6px 12px;border-radius:100px;border:1px solid rgba(255,255,255,.22)}
+  .proj-mono{position:absolute;inset:0;z-index:1;display:flex;align-items:center;justify-content:center;pointer-events:none;
+    font-family:var(--serif);font-size:clamp(80px,13vw,150px);color:rgba(255,255,255,.07);letter-spacing:.04em}
+  .proj-info .pidx{font-family:var(--serif);font-size:16px;color:var(--red)}
+  .proj-info h3{font-family:var(--serif);font-weight:400;font-size:clamp(34px,5vw,62px);letter-spacing:-.02em;line-height:.98;margin:10px 0 8px}
+  .proj-kick{font-size:13px;font-weight:600;letter-spacing:.14em;text-transform:uppercase;color:var(--muted);margin-bottom:22px}
+  .proj-info p{font-size:clamp(15px,1.5vw,17px);color:var(--ink-2);line-height:1.65;max-width:48ch;margin-bottom:24px}
+  .proj-meta{display:flex;gap:36px;flex-wrap:wrap;border-top:1px solid var(--line);padding-top:20px}
+  .proj-meta .m .mv{font-family:var(--serif);font-size:clamp(28px,3.6vw,40px);line-height:1;letter-spacing:-.01em}
+  .proj-meta .m .mv b{color:var(--red)}
+  .proj-meta .m .ml{font-size:12px;color:var(--muted);text-transform:uppercase;letter-spacing:.08em;margin-top:8px;font-weight:500}
+
+  /* ---------- vaga ---------- */
+  .vaga{background:var(--paper-2)}
+  .vaga-top{display:grid;grid-template-columns:1fr 1fr;gap:clamp(30px,6vw,90px);align-items:end;margin-bottom:60px}
+  .pillars{display:grid;grid-template-columns:repeat(3,1fr);gap:clamp(20px,3vw,40px)}
+  .pillar{background:var(--paper);border:1px solid var(--line);border-radius:8px;padding:34px 30px 36px;transition:transform .45s cubic-bezier(.2,.7,.2,1),box-shadow .45s ease}
+  .pillar:hover{transform:translateY(-6px);box-shadow:0 22px 50px -28px rgba(12,26,46,.4)}
+  .pillar .pn{display:inline-flex;align-items:center;justify-content:center;width:40px;height:40px;border-radius:50%;border:1px solid var(--red);color:var(--red);font-family:var(--serif);font-size:19px;margin-bottom:24px}
+  .pillar h3{font-family:var(--serif);font-weight:400;font-size:clamp(24px,2.6vw,30px);line-height:1.05;letter-spacing:-.01em;margin-bottom:14px}
+  .pillar p{font-size:14.5px;color:var(--muted);line-height:1.62}
+
+  /* ---------- ferramentas ---------- */
+  .tools-grid{display:flex;flex-wrap:wrap;gap:12px}
+  .tool{border:1px solid var(--line);border-radius:100px;padding:12px 22px;font-size:14.5px;font-weight:500;color:var(--ink-2);
+    transition:background .3s ease,color .3s ease,border-color .3s ease}
+  .tool:hover{background:var(--ink);color:#fff;border-color:var(--ink)}
+  .tools-grid{margin-top:8px}
+
+  /* ---------- manifesto / fechamento ---------- */
+  .manifesto{border-top:1px solid var(--line)}
+  .manifesto .mq{font-family:var(--serif);font-weight:400;letter-spacing:-.015em;line-height:1.08;
+    font-size:clamp(30px,4.6vw,60px);max-width:21ch}
+  .manifesto .mq em{font-style:italic;color:var(--red)}
+  .manifesto .msub{margin-top:46px;padding-top:26px;border-top:1px solid var(--line);
+    display:flex;flex-wrap:wrap;gap:14px 38px;align-items:center}
+  .manifesto .msub span{font-size:13px;font-weight:600;letter-spacing:.16em;text-transform:uppercase;color:var(--muted);
+    display:inline-flex;align-items:center;gap:14px}
+  .manifesto .msub span::before{content:"";width:7px;height:7px;border-radius:50%;background:var(--red)}
+
+  /* ---------- contato ---------- */
+  .contact{background:var(--ink);color:var(--paper);position:relative;overflow:hidden}
+  .contact::after{content:"";position:absolute;right:-12%;bottom:-30%;width:60vw;height:60vw;border-radius:50%;
+    background:radial-gradient(circle,rgba(200,16,46,.5),transparent 62%);pointer-events:none}
+  .contact .wrap{position:relative;z-index:2}
+  .contact .eyebrow{color:rgba(245,244,240,.7)}
+  .contact .eyebrow::before{background:var(--red)}
+  .contact h2{font-family:var(--serif);font-weight:400;letter-spacing:-.02em;line-height:.94;font-size:clamp(46px,9vw,128px);margin:26px 0 10px}
+  .contact h2 em{font-style:italic}
+  .contact .sub{font-size:clamp(16px,1.8vw,20px);color:rgba(245,244,240,.72);max-width:40ch;margin-bottom:60px;font-weight:300}
+  .channels{display:grid;grid-template-columns:repeat(2,1fr);gap:0;border-top:1px solid rgba(245,244,240,.18)}
+  .chan{display:flex;align-items:center;justify-content:space-between;gap:20px;padding:26px 4px;border-bottom:1px solid rgba(245,244,240,.18);transition:padding .4s ease,color .3s ease;position:relative}
+  .chan:hover{padding-left:18px}
+  .chan:nth-child(odd){border-right:1px solid rgba(245,244,240,.18);padding-right:34px}
+  .chan:nth-child(even){padding-left:34px}
+  .chan:nth-child(even):hover{padding-left:52px}
+  .chan .cl{font-size:12px;letter-spacing:.16em;text-transform:uppercase;color:rgba(245,244,240,.55);font-weight:600;margin-bottom:9px}
+  .chan .cv{font-family:var(--serif);font-size:clamp(20px,2.4vw,30px);letter-spacing:-.01em;line-height:1.05;word-break:break-word}
+  .chan .arrow{font-size:22px;color:var(--red);transition:transform .35s ease;flex:0 0 auto}
+  .chan:hover .arrow{transform:translate(5px,-5px)}
+  .foot{display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:16px;padding:50px 0 4px;font-size:12.5px;color:rgba(245,244,240,.5);letter-spacing:.04em}
+  .foot .fbrand{font-family:var(--serif);font-size:20px;color:var(--paper)}
+
+  /* ---------- responsive ---------- */
+  @media (max-width:920px){
+    .intro-grid{grid-template-columns:1fr;gap:54px}
+    .hero-media{justify-content:center}
+    .hero-media img{width:100%;height:100%;max-width:none;object-fit:cover;object-position:50% 16%}
+    .scrim{background:
+      linear-gradient(180deg,rgba(8,16,30,.5) 0%,rgba(8,16,30,0) 24%,rgba(8,16,30,0) 40%,rgba(8,16,30,.8) 100%),
+      radial-gradient(120% 80% at 50% 26%,transparent 42%,rgba(8,16,30,.5) 100%)}
+    .exp-grid{grid-template-columns:1fr 1fr}
+    .evoflow{grid-template-columns:1fr 1fr;gap:30px 24px}
+    .evoflow::before{display:none}
+    .exp:nth-child(3n){border-right:1px solid var(--line);padding-right:30px}
+    .exp:nth-child(2n){border-right:none;padding-right:0}
+    .proj{grid-template-columns:1fr}
+    .proj:nth-child(even) .proj-media{order:0}
+    .pillars{grid-template-columns:1fr}
+    .vaga-top{grid-template-columns:1fr;gap:24px}
+    .channels{grid-template-columns:1fr}
+    .chan:nth-child(odd){border-right:none;padding-right:4px}
+    .chan:nth-child(even){padding-left:4px}
+    .chan:nth-child(even):hover{padding-left:18px}
+  }
+  @media (max-width:680px){
+    .navlinks .lnk,.dotsep{display:none}
+    .exp-grid{grid-template-columns:1fr}
+    .exp{border-right:none!important;padding-right:0!important}
+    .job{grid-template-columns:54px 1fr;gap:14px}
+    .job .jp{display:none}
+    .evoflow{grid-template-columns:1fr}
+    .role-head{grid-template-columns:44px 1fr 30px;gap:14px}
+    .role .jp{display:none}
+    .role-body p{padding-left:44px}
+    .stat{grid-template-columns:1fr}
+    .stat .lab{padding-bottom:0;margin-top:6px}
+    .proj-meta{gap:24px}
+  }
+</style>
+</head>
+<body>
+
+<nav id="nav">
+  <a href="#top" class="brand">Moisés Fernandes.</a>
+  <div class="navlinks">
+    <a href="#sobre" class="lnk">Sobre</a>
+    <a href="#carreira" class="lnk">Carreira</a>
+    <a href="#projetos" class="lnk">Projetos</a>
+    <a href="#vaga" class="lnk">Vaga</a>
+    <a href="#contato" class="cta">Falar comigo</a>
+  </div>
+</nav>
+
+<!-- ===================== HERO ===================== -->
+<header class="hero" id="top">
+  <div class="hero-media">
+    <img id="heroImg" src="assets/moises.png" alt="Moisés Fernandes" />
+  </div>
+  <div class="wash"></div>
+  <div class="wash2"></div>
+  <div class="scrim"></div>
+  <div class="hero-inner">
+    <div class="hero-loc reveal in">Guarulhos, SP · Brasil</div>
+    <h1 class="reveal in d1">Moisés<br /><em>Fernandes</em></h1>
+    <div class="hero-foot">
+      <p class="hero-role reveal in d2">Analista de Dados Pleno na <b>LATAM Airlines</b>. Transformo a operação aeroportuária em sistemas, dados e decisões em tempo real.</p>
+      <div class="scrolldown reveal in d3">Role para explorar <span class="ln"></span></div>
+    </div>
+  </div>
+</header>
+
+<!-- ===================== SOBRE ===================== -->
+<section class="sec" id="sobre">
+  <div class="wrap">
+    <div class="sec-head reveal">
+      <span class="sec-num">01</span>
+      <span class="eyebrow">Sobre</span>
+    </div>
+    <h2 class="h2 reveal" style="max-width:13ch;margin-bottom:54px">Onde operação e dados <span class="lede-em">se encontram.</span></h2>
+    <div class="intro-grid">
+      <div class="intro-body reveal">
+        <p class="lead" style="margin-bottom:34px">Analista de Dados na LATAM Airlines com experiência operacional construída dentro do ambiente aeroportuário — e atuação direta no desenvolvimento de sistemas utilizados diariamente pela operação.</p>
+        <p>Especializado em Google Apps Script, AppSheet, BigQuery e Looker Studio, fui responsável pelo desenvolvimento e implantação de 3 sistemas em produção que digitalizaram processos operacionais reais no GRU: <strong>Heimdall</strong>, <strong>ARGOS</strong> e <strong>Hermes</strong>.</p>
+        <p>Atuo como referência técnica e metodológica, conduzindo treinamentos, estruturando dados, indicadores e automações que suportam decisões operacionais diárias. Sirvo de ponte entre quem executa os processos e quem depende das informações para decidir.</p>
+        <p>Minha trajetória começou na American Airlines, passou pela operação direta na WFS&nbsp;|&nbsp;Orbital — atendimento a passageiros, RH, custos, compras e coordenação — e chegou ao Hub Control Center da LATAM, onde acompanhei decisões críticas em tempo real. Foi nesse ambiente que identifiquei os desafios que mais tarde transformei em automações, dashboards e sistemas.</p>
+      </div>
+      <div class="stats reveal d1">
+        <div class="stat">
+          <div class="big">214<sup>/dia</sup></div>
+          <div class="lab">Voos monitorados<br />em tempo real</div>
+        </div>
+        <div class="stat">
+          <div class="big">24<sup>/turno</sup></div>
+          <div class="lab">Usuários ativos<br />na operação</div>
+        </div>
+        <div class="stat">
+          <div class="big">3</div>
+          <div class="lab">Terminais com<br />rastreabilidade (T2 · T3 · DOT)</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ===================== EXPERTISE ===================== -->
+<section class="sec" id="expertise" style="padding-top:0">
+  <div class="wrap">
+    <div class="sec-head reveal">
+      <span class="sec-num">02</span>
+      <span class="eyebrow">Expertise</span>
+    </div>
+    <h2 class="h2 reveal" style="max-width:14ch;margin-bottom:54px">O que faço<br />pela operação.</h2>
+    <div class="exp-grid">
+      <div class="exp reveal"><div class="n">01</div><h3>Análise de Dados</h3><p>SQL, tratamento e modelagem de dados operacionais para transformar registro bruto em decisão.</p></div>
+      <div class="exp reveal d1"><div class="n">02</div><h3>Automação de Processos</h3><p>Google Apps Script e integrações que eliminam tarefas manuais e devolvem tempo à equipe.</p></div>
+      <div class="exp reveal d2"><div class="n">03</div><h3>Desenvolvimento de Sistemas</h3><p>Aplicações internas de ponta a ponta — arquitetura, implantação e treinamento dos usuários.</p></div>
+      <div class="exp reveal"><div class="n">04</div><h3>Monitoramento em Tempo Real</h3><p>Alertas automáticos e visibilidade de programação para antecipar e reagir a cada alteração.</p></div>
+      <div class="exp reveal d1"><div class="n">05</div><h3>Visualização &amp; BI</h3><p>Painéis claros que aproximam quem opera no pátio de quem decide na gestão.</p></div>
+      <div class="exp reveal d2"><div class="n">06</div><h3>Gestão Operacional</h3><p>Liderança de turno e Hub Control: coordenar equipes e recursos sob pressão e prazo.</p></div>
+    </div>
+  </div>
+</section>
+
+<!-- ===================== DIFERENCIAL ===================== -->
+<section class="sec" id="carreira">
+  <div class="wrap">
+    <div class="sec-head reveal">
+      <span class="sec-num">03</span>
+      <span class="eyebrow">O que me diferencia</span>
+    </div>
+    <div class="dif-top reveal">
+      <h2 class="h2" style="max-width:14ch">Construí dentro da operação o que hoje <span class="lede-em">automatizo.</span></h2>
+      <div class="dif-intro">
+        <p>Por isso consigo construir soluções que funcionam na prática.</p>
+        <p class="dif-sub">Minha trajetória profissional me permitiu enxergar a operação por diferentes perspectivas: atendimento ao passageiro, processos administrativos, coordenação operacional, gestão em tempo real e análise de dados. Essa combinação me ajuda a transformar necessidades reais da operação em soluções digitais sustentáveis.</p>
+      </div>
+    </div>
+
+    <!-- 5 pilares -->
+    <div class="pilares">
+
+      <div class="pilar reveal">
+        <div class="pilar-icon">
+          <svg width="28" height="28" viewBox="0 0 28 28" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <circle cx="14" cy="10" r="5" stroke="currentColor" stroke-width="1.5"/>
+            <path d="M4 24c0-5.523 4.477-10 10-10s10 4.477 10 10" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/>
+          </svg>
+        </div>
+        <div class="pilar-body">
+          <h3>Experiência Operacional</h3>
+          <p>Atendimento ao passageiro, embarque, check-in, fluxo aeroportuário e operação de alta demanda.</p>
+          <div class="pilar-tags">
+            <span>Passageiros</span><span>Operação</span><span>Atendimento</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="pilar reveal d1">
+        <div class="pilar-icon">
+          <svg width="28" height="28" viewBox="0 0 28 28" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <rect x="3" y="5" width="22" height="18" rx="2" stroke="currentColor" stroke-width="1.5"/>
+            <path d="M3 10h22" stroke="currentColor" stroke-width="1.5"/>
+            <path d="M9 15h10M9 19h6" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/>
+          </svg>
+        </div>
+        <div class="pilar-body">
+          <h3>Visão Administrativa</h3>
+          <p>RH, custos, compras, fornecedores, contratos e suporte à gestão operacional.</p>
+          <div class="pilar-tags">
+            <span>Custos</span><span>Compras</span><span>Fornecedores</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="pilar reveal d2">
+        <div class="pilar-icon">
+          <svg width="28" height="28" viewBox="0 0 28 28" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <circle cx="14" cy="14" r="10" stroke="currentColor" stroke-width="1.5"/>
+            <path d="M14 8v6l4 2" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+          </svg>
+        </div>
+        <div class="pilar-body">
+          <h3>Coordenação em Tempo Real</h3>
+          <p>Hub Control Center — integração entre áreas, gestão de AOG, voos cancelados e contingências operacionais em tempo real.</p>
+          <div class="pilar-tags">
+            <span>HCC</span><span>Contingências</span><span>Coordenação</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="pilar reveal d3">
+        <div class="pilar-icon">
+          <svg width="28" height="28" viewBox="0 0 28 28" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <rect x="4" y="4" width="9" height="9" rx="1.5" stroke="currentColor" stroke-width="1.5"/>
+            <rect x="15" y="4" width="9" height="9" rx="1.5" stroke="currentColor" stroke-width="1.5"/>
+            <rect x="4" y="15" width="9" height="9" rx="1.5" stroke="currentColor" stroke-width="1.5"/>
+            <path d="M15 19.5h9M19.5 15v9" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/>
+          </svg>
+        </div>
+        <div class="pilar-body">
+          <h3>Transformação Digital</h3>
+          <p>Desenvolvimento de sistemas utilizados diariamente pela operação aeroportuária.</p>
+          <div class="pilar-tags">
+            <span>Heimdall</span><span>ARGOS</span><span>Hermes</span>
+          </div>
+          <div class="pilar-badge">3 sistemas em produção</div>
+        </div>
+      </div>
+
+      <div class="pilar reveal d4">
+        <div class="pilar-icon">
+          <svg width="28" height="28" viewBox="0 0 28 28" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path d="M4 20l5-7 5 4 5-8 5 5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+            <circle cx="9" cy="13" r="1.5" fill="currentColor"/>
+            <circle cx="14" cy="17" r="1.5" fill="currentColor"/>
+            <circle cx="19" cy="9" r="1.5" fill="currentColor"/>
+          </svg>
+        </div>
+        <div class="pilar-body">
+          <h3>Dados, Automação e Decisão</h3>
+          <p>BigQuery, Looker Studio, Google Apps Script e AppSheet — KPIs, automações e governança de dados para suporte operacional.</p>
+          <div class="pilar-tags">
+            <span>Apps Script</span><span>AppSheet</span><span>BigQuery</span><span>Looker Studio</span><span>KPIs</span>
+          </div>
+        </div>
+      </div>
+
+    </div>
+
+    <!-- Frase editorial central -->
+    <div class="dif-quote reveal">
+      <div class="dif-quote-line"></div>
+      <blockquote>Poucos profissionais conhecem a operação <em>e</em> a tecnologia.<br />Minha trajetória foi construída nos dois lados.</blockquote>
+      <div class="dif-quote-line"></div>
+    </div>
+
+    <!-- Título de transição para a carreira -->
+    <div class="sec-head reveal" style="margin-top:80px;margin-bottom:0">
+      <span class="eyebrow">Histórico profissional</span>
+    </div>
+
+    <div class="career">
+      <div class="role reveal" data-open="true">
+        <button class="role-head" aria-expanded="true">
+          <span class="jn">01</span>
+          <span><span class="jt">Analista de Dados Pleno</span><span class="jcomp">Dados, automação e sustentação</span><span class="jc">LATAM Airlines</span></span>
+          <span class="jp">Jul 2025 — Presente</span>
+          <span class="role-plus" aria-hidden="true"></span>
+        </button>
+        <div class="role-body"><div class="role-body-inner"><ul class="role-list">
+          <li><span class="role-tag">Heimdall</span>Plataforma em Google Apps Script para gestão e alocação de equipes aeroportuárias — usada por 24 usuários por turno, digitalizando 3 planilhas manuais em processo unificado e rastreável.</li>
+          <li><span class="role-tag">ARGOS</span>Monitoramento em tempo real de 214 voos/dia com alertas automáticos no Google Chat, controle de duplicatas e histórico completo de alterações na programação.</li>
+          <li><span class="role-tag">BigQuery</span>Consultas SQL e pipelines de dados para consolidação de informações operacionais e suporte aos dashboards corporativos.</li>
+          <li><span class="role-tag">Looker Studio</span>Dashboards executivos integrados ao BigQuery com KPIs operacionais e indicadores de desempenho para a gestão de aeroportos.</li>
+          <li><span class="role-tag">Referência técnica</span>Condução de treinamentos, disseminação de boas práticas e garantia de continuidade operacional dos sistemas desenvolvidos.</li>
+          <li><span class="role-tag">Gestão</span>Preparo e apresentação de relatórios executivos e alinhamentos técnicos para gestores e áreas parceiras.</li>
+        </ul></div></div>
+      </div>
+      <div class="role reveal" data-open="false">
+        <button class="role-head" aria-expanded="false">
+          <span class="jn">02</span>
+          <span><span class="jt">Líder Hub Control Center</span><span class="jcomp">Coordenação operacional em tempo real</span><span class="jc">LATAM Airlines</span></span>
+          <span class="jp">Dez 2024 — Jul 2025</span>
+          <span class="role-plus" aria-hidden="true"></span>
+        </button>
+        <div class="role-body"><div class="role-body-inner"><ul class="role-list">
+          <li><span class="role-tag">Malha aérea</span>Orquestração do hub GRU — trocas estratégicas de aeronaves e alocação nos boxes adequados para garantir pontualidade operacional.</li>
+          <li><span class="role-tag">Integração</span>Ponto central em tempo real entre DOT, manutenção, abastecimento, CCT, check-in, embarque e equipes terceirizadas.</li>
+          <li><span class="role-tag">Indicadores</span>Monitoramento de KPIs operacionais e apoio às lideranças na tomada de decisão em ambiente de alta complexidade.</li>
+          <li><span class="role-tag">Atrasos</span>Análise e justificativa de atrasos operacionais, atribuindo causas e reportando à coordenação de aeroportos.</li>
+          <li><span class="role-tag">Decisão</span>Gestão de prioridades e tomada de decisões críticas sob alta pressão, garantindo cumprimento de procedimentos e padrões operacionais.</li>
+        </ul></div></div>
+      </div>
+      <div class="role reveal" data-open="false">
+        <button class="role-head" aria-expanded="false">
+          <span class="jn">03</span>
+          <span><span class="jt">Assistente Administrativo II</span><span class="jcomp">Processos, custos e melhoria operacional</span><span class="jc">WFS · Orbital</span></span>
+          <span class="jp">Ago 2024 — Mar 2025</span>
+          <span class="role-plus" aria-hidden="true"></span>
+        </button>
+        <div class="role-body"><div class="role-body-inner"><ul class="role-list">
+          <li><span class="role-tag">Hermes</span>Aplicação em AppSheet com QR Code para controle de estoque de equipamentos (rádios, tablets e materiais) — implantada em TPS2, TPS3 e DOT, eliminando planilha manual com rastreabilidade completa.</li>
+          <li><span class="role-tag">RH</span>Gestão de rotinas administrativas: headcount, férias, promoções e resolução de conflitos.</li>
+          <li><span class="role-tag">Compras</span>Cotações, licitações, seleção de fornecedores e acompanhamento de notas fiscais e boletos.</li>
+          <li><span class="role-tag">Custos</span>Controle de despesas operacionais do setor assegurando conformidade com o orçamento.</li>
+          <li><span class="role-tag">TOTVS · SAP</span>Gestão de compras e aprovações nos sistemas ERP da empresa.</li>
+          <li><span class="role-tag">Indicadores</span>Monitoramento de indicadores administrativos e operacionais para suporte à gestão.</li>
+        </ul></div></div>
+      </div>
+      <div class="role reveal" data-open="false">
+        <button class="role-head" aria-expanded="false">
+          <span class="jn">04</span>
+          <span><span class="jt">Agente de Operações de Passageiros</span><span class="jcomp">Experiência direta com o passageiro</span><span class="jc">WFS · Orbital</span></span>
+          <span class="jp">Abr 2024 — Ago 2024</span>
+          <span class="role-plus" aria-hidden="true"></span>
+        </button>
+        <div class="role-body"><div class="role-body-inner"><ul class="role-list">
+          <li>Atendimento ao cliente em ambiente aeroportuário de alta demanda, garantindo eficiência e excelência na experiência do passageiro.</li>
+          <li>Apoiei processos de check-in e embarque, contribuindo para o fluxo operacional e a qualidade do serviço.</li>
+          <li>Contribuí para a padronização de processos e consistência na entrega do serviço.</li>
+        </ul></div></div>
+      </div>
+      <div class="role reveal" data-open="false">
+        <button class="role-head" aria-expanded="false">
+          <span class="jn">05</span>
+          <span><span class="jt">Auxiliar de Serviços Aeroportuários</span><span class="jcomp">Base operacional</span><span class="jc">WFS · Orbital</span></span>
+          <span class="jp">Set 2021 — Mar 2024</span>
+          <span class="role-plus" aria-hidden="true"></span>
+        </button>
+        <div class="role-body"><div class="role-body-inner"><ul class="role-list">
+          <li>Auxiliei no gerenciamento do fluxo de passageiros e bagagens em aeroporto de alto volume.</li>
+          <li>Segui procedimentos rigorosos de segurança e operações, consolidando a base operacional que fundamenta minha visão prática dos processos aeroportuários.</li>
+        </ul></div></div>
+      </div>
+      <div class="role reveal" data-open="false">
+        <button class="role-head" aria-expanded="false">
+          <span class="jn">06</span>
+          <span><span class="jt">Jovem Aprendiz</span><span class="jcomp">Primeiro contato com aviação</span><span class="jc">American Airlines</span></span>
+          <span class="jp">Jul 2016 — Nov 2017</span>
+          <span class="role-plus" aria-hidden="true"></span>
+        </button>
+        <div class="role-body"><div class="role-body-inner"><ul class="role-list">
+          <li>Suporte administrativo com arquivamento, digitação de dados e gestão de documentos em ambiente focado em conformidade e padrão internacional.</li>
+          <li>Primeiro contato com a cultura aeroportuária — experiência que moldou minha visão da operação e deu início a toda minha trajetória no setor.</li>
+        </ul></div></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ===================== PROJETOS ===================== -->
+<section class="sec" id="projetos">
+  <div class="wrap">
+    <div class="sec-head reveal">
+      <span class="sec-num">04</span>
+      <span class="eyebrow">Projetos</span>
+    </div>
+    <h2 class="h2 reveal" style="max-width:18ch;margin-bottom:18px">Sistemas que mantêm<br />a operação no ar.</h2>
+    <div class="projects">
+
+      <article class="proj reveal">
+        <div class="proj-media">
+          <span class="proj-tag">Alocação de equipes</span>
+          <img src="assets/heimdall.png" alt="Painel do sistema Heimdall — alocação de equipes aeroportuárias" loading="lazy" />
+        </div>
+        <div class="proj-info">
+          <div class="pidx">Projeto 01</div>
+          <h3>Heimdall</h3>
+          <div class="proj-kick">Alocação digital de equipes aeroportuárias</div>
+          <p>Sistema que substituiu 3 planilhas manuais por uma visão unificada da operação. Atuei na arquitetura, no desenvolvimento e na implantação — do conceito ao uso diário no turno.</p>
+          <div class="proj-meta">
+            <div class="m"><div class="mv"><b>24</b></div><div class="ml">Usuários por turno</div></div>
+            <div class="m"><div class="mv"><b>3 → 1</b></div><div class="ml">Planilhas unificadas</div></div>
+          </div>
+        </div>
+      </article>
+
+      <article class="proj reveal">
+        <div class="proj-media">
+          <span class="proj-tag">Monitoramento em tempo real</span>
+          <img src="assets/argos.png" alt="Painel do sistema ARGOS — monitoramento em tempo real de voos" loading="lazy" />
+        </div>
+        <div class="proj-info">
+          <div class="pidx">Projeto 02</div>
+          <h3>ARGOS</h3>
+          <div class="proj-kick">Vigilância da programação de voos</div>
+          <p>Monitora alterações na programação em tempo real e dispara alertas automáticos via Google Chat. Desenvolvimento completo e sustentação — permitindo realocação imediata de equipes a cada mudança.</p>
+          <div class="proj-meta">
+            <div class="m"><div class="mv"><b>214</b></div><div class="ml">Voos por dia</div></div>
+            <div class="m"><div class="mv">Tempo real</div><div class="ml">Alertas via Chat</div></div>
+          </div>
+        </div>
+      </article>
+
+      <article class="proj reveal">
+        <div class="proj-media">
+          <span class="proj-tag">Controle de estoque · QR</span>
+          <img src="assets/hermes.png" alt="Aplicação Hermes — controle de estoque com QR Code" loading="lazy" />
+        </div>
+        <div class="proj-info">
+          <div class="pidx">Projeto 03</div>
+          <h3>Hermes</h3>
+          <div class="proj-kick">Rastreabilidade de equipamentos por QR Code</div>
+          <p>Aplicação em AppSheet com QR Code para controle de estoque de equipamentos operacionais. Desenvolvimento, configuração dos QR Codes, implantação e treinamento das equipes em campo.</p>
+          <div class="proj-meta">
+            <div class="m"><div class="mv"><b>3</b></div><div class="ml">Terminais (T2 · T3 · DOT)</div></div>
+            <div class="m"><div class="mv">100%</div><div class="ml">Rastreabilidade</div></div>
+          </div>
+        </div>
+      </article>
+
+    </div>
+  </div>
+</section>
+
+<!-- ===================== VAGA ===================== -->
+<section class="sec vaga" id="vaga">
+  <div class="wrap">
+    <div class="sec-head reveal">
+      <span class="sec-num">05</span>
+      <span class="eyebrow">Por que minha experiência se conecta com a vaga</span>
+    </div>
+    <div class="vaga-top">
+      <h2 class="h2 reveal" style="max-width:16ch">Operação, tecnologia e melhoria contínua.</h2>
+      <p class="lead reveal d1" style="font-weight:300">A vaga de <span class="lede-em">Analista Administrativo Tripulação SR</span> exige alguém capaz de conectar operação, tecnologia e melhoria contínua. Essa conexão faz parte da minha trajetória profissional.</p>
+    </div>
+    <div class="pillars">
+      <div class="pillar reveal">
+        <div class="pn">1</div>
+        <h3>Automação de processos</h3>
+        <p>Construo sistemas que substituem controles manuais por processos digitais rastreáveis. Heimdall, HERMES, ARGOS e outras automações são exemplos reais utilizados no ambiente operacional.</p>
+      </div>
+      <div class="pillar reveal d1">
+        <div class="pn">2</div>
+        <h3>Dados confiáveis para decisão</h3>
+        <p>Desenvolvo dashboards, indicadores e fluxos de dados que garantem informação consistente para a tomada de decisão operacional.</p>
+      </div>
+      <div class="pillar reveal d2">
+        <div class="pn">3</div>
+        <h3>Sustentação e orientação</h3>
+        <p>Implanto soluções, capacito usuários, acompanho a adoção das ferramentas e garanto continuidade operacional após a entrega.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ===================== FERRAMENTAS ===================== -->
+<section class="sec" id="ferramentas" style="padding-top:0">
+  <div class="wrap">
+    <div class="sec-head reveal">
+      <span class="sec-num">06</span>
+      <span class="eyebrow">Ferramentas</span>
+    </div>
+    <h2 class="h2 reveal" style="max-width:16ch;margin-bottom:46px">O que uso no<br />dia a dia.</h2>
+    <div class="tools-grid reveal d1">
+      <span class="tool">Google Apps Script</span>
+      <span class="tool">Vibe Coding · AI-Assisted Dev</span>
+      <span class="tool">AppSheet</span>
+      <span class="tool">BigQuery</span>
+      <span class="tool">Looker Studio</span>
+      <span class="tool">SQL</span>
+      <span class="tool">Python</span>
+      <span class="tool">Google Workspace</span>
+      <span class="tool">Google Chat API</span>
+      <span class="tool">Excel Avançado · VBA</span>
+      <span class="tool">TOTVS ERP</span>
+      <span class="tool">SAP</span>
+      <span class="tool">QR / Automação</span>
+      <span class="tool">Dashboards &amp; BI</span>
+      <span class="tool">Gestão de Operações</span>
+    </div>
+  </div>
+</section>
+
+<!-- ===================== FORMAÇÃO ===================== -->
+<section class="sec" id="formacao" style="padding-top:0">
+  <div class="wrap">
+    <div class="sec-head reveal">
+      <span class="sec-num">07</span>
+      <span class="eyebrow">Formação &amp; Idiomas</span>
+    </div>
+    <h2 class="h2 reveal" style="max-width:16ch;margin-bottom:54px">Aprendizado<br />contínuo.</h2>
+    <div class="exp-grid" style="margin-bottom:54px">
+      <div class="exp reveal">
+        <div class="n">01</div>
+        <h3>Ciência da Computação</h3>
+        <p>Bacharelado em andamento — Universidade Cruzeiro do Sul, Guarulhos, SP.<br />Previsão de conclusão: Dez 2027.</p>
+      </div>
+      <div class="exp reveal d1">
+        <div class="n">02</div>
+        <h3>Dados &amp; Tecnologia</h3>
+        <p>Desenvolvimento profissional contínuo via Udemy: Looker Studio, BigQuery, Excel Avançado, Python, SQL e Google Apps Script.</p>
+      </div>
+      <div class="exp reveal d2">
+        <div class="n">03</div>
+        <h3>Programa ARCO · CIEE</h3>
+        <p>Ocupações Administrativas — Centro de Integração Empresa-Escola, Guarulhos, SP (Jul 2016 – Nov 2017).</p>
+      </div>
+    </div>
+    <div class="sec-head reveal" style="margin-bottom:28px">
+      <span class="eyebrow">Idiomas</span>
+    </div>
+    <div class="tools-grid reveal d1">
+      <span class="tool">Português · Nativo</span>
+      <span class="tool">Inglês · Intermediário</span>
+      <span class="tool">Espanhol · Básico</span>
+    </div>
+  </div>
+</section>
+
+<!-- ===================== MANIFESTO ===================== -->
+<section class="sec manifesto" id="manifesto" style="padding-top:0">
+  <div class="wrap">
+    <p class="mq reveal">Minha trajetória foi construída dentro da operação aeroportuária. Por isso, quando desenvolvo uma solução, não penso apenas na tecnologia — penso em <em>quem vai utilizá-la</em>, na decisão que ela precisa apoiar e no impacto que ela deve gerar.</p>
+    <div class="msub reveal d1">
+      <span>Experiência operacional</span>
+      <span>Visão sistêmica</span>
+      <span>Soluções digitais</span>
+    </div>
+  </div>
+</section>
+
+<!-- ===================== CONTATO ===================== -->
+<section class="sec contact" id="contato">
+  <div class="wrap">
+    <span class="eyebrow reveal">Contato</span>
+    <h2 class="reveal d1">Vamos<br /><em>conversar.</em></h2>
+    <p class="sub reveal d2">Disponível para a vaga de Analista Administrativo Tripulação SR — e para qualquer conversa sobre dados e operação.</p>
+    <div class="channels reveal d2">
+      <a class="chan" href="mailto:moisesfernandes2921@icloud.com">
+        <span><span class="cl">Email</span><span class="cv">moisesfernandes2921@icloud.com</span></span>
+        <span class="arrow">↗</span>
+      </a>
+      <a class="chan" href="https://wa.me/5511963629763" target="_blank" rel="noopener">
+        <span><span class="cl">WhatsApp · Telefone</span><span class="cv">+55 11 96362-9763</span></span>
+        <span class="arrow">↗</span>
+      </a>
+      <a class="chan" href="https://www.linkedin.com/in/mois%C3%A9s-fernandes-889a8b1b2" target="_blank" rel="noopener">
+        <span><span class="cl">LinkedIn</span><span class="cv">in/moisés-fernandes</span></span>
+        <span class="arrow">↗</span>
+      </a>
+      <a class="chan" href="#top">
+        <span><span class="cl">Localização</span><span class="cv">Guarulhos, SP · Brasil</span></span>
+        <span class="arrow">↗</span>
+      </a>
+    </div>
+    <div class="foot">
+      <span class="fbrand">Moisés Fernandes.</span>
+      <span>© 2026 · Analista de Dados Pleno · LATAM Airlines</span>
+    </div>
+  </div>
+</section>
+
+<script>
+  const nav = document.getElementById('nav');
+  const heroImg = document.getElementById('heroImg');
+  const onScroll = () => {
+    const y = window.scrollY || window.pageYOffset;
+    nav.classList.toggle('scrolled', y > window.innerHeight * 0.72);
+    if (heroImg && y < window.innerHeight * 1.2) {
+      heroImg.style.transform = 'translateY(' + (y * 0.18) + 'px) scale(1.02)';
+    }
+  };
+  window.addEventListener('scroll', onScroll, { passive: true });
+  onScroll();
+
+  const io = new IntersectionObserver((entries) => {
+    entries.forEach((e) => {
+      if (e.isIntersecting) { e.target.classList.add('in'); io.unobserve(e.target); }
+    });
+  }, { threshold: 0.14, rootMargin: '0px 0px -8% 0px' });
+  document.querySelectorAll('.reveal:not(.in)').forEach((el) => io.observe(el));
+
+  document.querySelectorAll('.role-head').forEach((btn) => {
+    btn.addEventListener('click', () => {
+      const role = btn.closest('.role');
+      const open = role.getAttribute('data-open') === 'true';
+      role.setAttribute('data-open', open ? 'false' : 'true');
+      btn.setAttribute('aria-expanded', open ? 'false' : 'true');
+    });
+  });
+</script>
+</body>
+</html>
