@@ -91,6 +91,10 @@
   nav.scrolled .cta:hover{background:var(--red-deep);border-color:var(--red-deep)}
   .dotsep{opacity:.5}
   .navlinks a.lnk.lang{font-weight:600;letter-spacing:.08em;white-space:nowrap}
+  .langsel{display:inline-flex;align-items:center;gap:12px}
+  .navlinks .langsel a.lnk.lang{opacity:.55}
+  .navlinks .langsel a.lnk.lang[aria-current="true"]{opacity:1}
+  .navlinks .langsel a.lnk.lang[aria-current="true"]::after{width:100%}
   .menu-toggle{display:none}
 
   /* ---------- hero ---------- */
@@ -345,9 +349,12 @@
   @media (max-width:680px){
     .navlinks .lnk,.dotsep{display:none}
     .brand{white-space:nowrap}
-    .navlinks{gap:12px}
-    .navlinks .cta{padding:10px 14px;letter-spacing:.1em}
-    .navlinks a.lnk.lang{display:inline-block}
+    nav{padding-left:16px;padding-right:16px}
+    .brand{font-size:22px}
+    .navlinks{gap:10px}
+    .navlinks .cta{padding:9px 11px;font-size:11px;letter-spacing:.06em}
+    .navlinks a.lnk.lang{display:inline-block;font-size:12px;letter-spacing:.04em}
+    .langsel{gap:7px}
     .exp-grid{grid-template-columns:1fr}
     .exp{border-right:none!important;padding-right:0!important}
     .job{grid-template-columns:54px 1fr;gap:14px}
@@ -371,7 +378,11 @@
     <a href="#carreira" class="lnk" data-i18n="nav_carreira">Carreira</a>
     <a href="#projetos" class="lnk" data-i18n="nav_projetos">Projetos</a>
     <a href="#vaga" class="lnk" data-i18n="nav_vaga">Vaga</a>
-    <a href="?lang=en" class="lnk lang" id="langToggle" hreflang="en" lang="en" aria-label="Switch language to English" title="English">EN</a>
+    <span class="langsel" id="langSel" role="group" aria-label="Idioma / Language">
+      <a href="?lang=pt" class="lnk lang" data-lang="pt" hreflang="pt-BR" lang="pt-BR" title="Português" aria-current="true">PT</a>
+      <a href="?lang=en" class="lnk lang" data-lang="en" hreflang="en" lang="en" title="English">EN</a>
+      <a href="?lang=es" class="lnk lang" data-lang="es" hreflang="es" lang="es" title="Español">ES</a>
+    </span>
     <a href="#contato" class="cta" data-i18n="nav_cta">Falar comigo</a>
   </div>
 </nav>
@@ -1017,67 +1028,232 @@
     "alt_heimdall": "Heimdall system dashboard — airport team allocation",
     "alt_argos": "ARGOS system dashboard — real-time flight monitoring",
     "alt_hermes": "Hermes application — inventory control with QR Code",
+  },
+  es: {
+    "hero_loc": "Guarulhos, SP · Brasil",
+    "hero_role": "Analista de Datos Semisenior en <b>LATAM Airlines</b>.",
+    "hero_scroll": "Desplázate para explorar <span class=\"ln\"></span>",
+    "nav_sobre": "Sobre mí",
+    "nav_carreira": "Trayectoria",
+    "nav_projetos": "Proyectos",
+    "nav_vaga": "Vacante",
+    "nav_cta": "Hablemos",
+    "sobre_h2": "¿Quién es <span class=\"lede-em\">Moisés Fernandes?</span>",
+    "sobre_lead": "Analista de Datos con experiencia construida dentro de la operación aeroportuaria de Guarulhos.",
+    "sobre_p": "A lo largo de mi carrera he trabajado en atención a pasajeros, procesos administrativos, gestión de costos, compras, proveedores y liderazgo operacional en entornos de toma de decisiones en tiempo real. Actualmente desarrollo sistemas, automatizaciones, dashboards e indicadores operacionales que apoyan la gestión y contribuyen a la mejora continua de los procesos.",
+    "exp_h2": "¿Qué puedo <span class=\"lede-em\">resolver por ti?</span>",
+    "exp1_h": "Análisis de Datos",
+    "exp1_p": "SQL, tratamiento y modelado de datos operacionales para convertir registros en bruto en decisiones.",
+    "exp2_h": "Automatización de Procesos",
+    "exp2_p": "Google Apps Script e integraciones que eliminan tareas manuales y devuelven tiempo al equipo.",
+    "exp3_h": "Desarrollo de Sistemas",
+    "exp3_p": "Aplicaciones internas de punta a punta: arquitectura, implementación y capacitación de los usuarios.",
+    "exp4_h": "Monitoreo en Tiempo Real",
+    "exp4_p": "Alertas automáticas y visibilidad de la programación para anticipar y reaccionar ante cada cambio.",
+    "exp5_h": "Visualización y BI",
+    "exp5_p": "Paneles claros que acercan a quienes operan en la plataforma con quienes deciden en la gerencia.",
+    "exp6_h": "Gestión Operacional",
+    "exp6_p": "Liderazgo de turno y Hub Control: coordinación de equipos y recursos bajo presión y plazos exigentes.",
+    "eyebrow_dif": "Lo que me diferencia",
+    "dif_h2": "Una trayectoria construida dentro <span class=\"lede-em\">de la operación.</span>",
+    "dif_p1": "De la atención a pasajeros al desarrollo de sistemas: cada etapa amplió mi visión de lo que la operación necesita.",
+    "dif_p2": "Mi trayectoria profesional me ha permitido ver la operación desde distintas perspectivas: atención al pasajero, procesos administrativos, coordinación operacional, gestión en tiempo real y análisis de datos. Esta combinación me ayuda a convertir necesidades reales de la operación en soluciones digitales sostenibles.",
+    "pil1_h": "Experiencia Operacional",
+    "pil1_p": "Atención al pasajero, embarque, check-in, flujo aeroportuario y operación de alta demanda.",
+    "tag_pass": "Pasajeros",
+    "tag_oper": "Operación",
+    "tag_atend": "Atención",
+    "pil2_h": "Visión Administrativa",
+    "pil2_p": "RR. HH., costos, compras, proveedores, contratos y apoyo a la gestión operacional.",
+    "tag_custos": "Costos",
+    "tag_compras": "Compras",
+    "tag_forn": "Proveedores",
+    "pil3_h": "Coordinación en Tiempo Real",
+    "pil3_p": "Hub Control Center: integración entre áreas, gestión de AOG, vuelos cancelados y contingencias operacionales en tiempo real.",
+    "tag_cont": "Contingencias",
+    "tag_coord": "Coordinación",
+    "pil4_h": "Transformación Digital",
+    "pil4_p": "Desarrollo de sistemas utilizados diariamente por la operación aeroportuaria.",
+    "pil4_badge": "3 sistemas en producción",
+    "pil5_h": "Datos, Automatización y Decisión",
+    "pil5_p": "BigQuery, Looker Studio, Google Apps Script y AppSheet: KPIs, automatizaciones y gobernanza de datos para el soporte operacional.",
+    "quote": "Pocos profesionales conocen la operación <em>y</em> la tecnología.<br />Mi carrera se construyó en ambos lados.",
+    "eyebrow_hist": "Historial profesional",
+    "r1_t": "Analista de Datos Semisenior",
+    "r1_c": "Datos, automatización y soporte",
+    "r1_d": "Jul 2025 — Presente",
+    "r1_l1": "Reconstruí Hermes en Next.js + Supabase para la operación de LATAM en GRU: más de 1.100 ítems, 285.000 movimientos de retiro/devolución y 2.100 colaboradores atendidos (datos al 4 ago 2026).",
+    "r1_l2": "Plataforma en Google Apps Script para la gestión y asignación de equipos aeroportuarios, utilizada por 24 usuarios por turno, que digitalizó 3 planillas manuales en un único proceso trazable.",
+    "r1_l3": "Monitoreo en tiempo real de 214 vuelos/día con alertas automáticas en Google Chat, control de duplicados e historial completo de cambios en la programación.",
+    "r1_l4": "Consultas SQL y pipelines de datos para consolidar información operacional y apoyar los dashboards corporativos.",
+    "r1_l5": "Dashboards ejecutivos integrados con BigQuery, con KPIs operacionales e indicadores de desempeño para la gestión de aeropuertos.",
+    "rt_ref": "Referente técnico",
+    "r1_l6": "Conducción de capacitaciones, difusión de buenas prácticas y garantía de la continuidad operacional de los sistemas desarrollados.",
+    "rt_gest": "Gestión",
+    "r1_l7": "Preparación y presentación de informes ejecutivos y alineaciones técnicas para gerentes y áreas aliadas.",
+    "r2_t": "Líder Hub Control Center",
+    "r2_c": "Coordinación operacional en tiempo real",
+    "r2_d": "Dic 2024 — Jul 2025",
+    "rt_malha": "Red de vuelos",
+    "r2_l1": "Orquestación del hub GRU: cambios estratégicos de aeronaves y asignación a las posiciones adecuadas para garantizar la puntualidad operacional.",
+    "rt_integ": "Integración",
+    "r2_l2": "Punto central en tiempo real entre DOT, mantenimiento, abastecimiento, CCT, check-in, embarque y equipos tercerizados.",
+    "rt_ind": "Indicadores",
+    "r2_l3": "Monitoreo de KPIs operacionales y apoyo a los líderes en la toma de decisiones en un entorno de alta complejidad.",
+    "rt_atr": "Retrasos",
+    "r2_l4": "Análisis y justificación de retrasos operacionales, asignando causas y reportando a la coordinación de aeropuertos.",
+    "rt_dec": "Decisión",
+    "r2_l5": "Gestión de prioridades y toma de decisiones críticas bajo alta presión, garantizando el cumplimiento de procedimientos y estándares operacionales.",
+    "r3_t": "Asistente Administrativo II",
+    "r3_c": "Procesos, costos y mejora operacional",
+    "r3_d": "Ago 2024 — Mar 2025",
+    "r3_l1": "Primera versión de Hermes en AppSheet con códigos QR para el control de inventario de equipos (radios, tablets y materiales), implementada en TPS2, TPS3 y DOT, que reemplazó una planilla manual con trazabilidad completa.",
+    "rt_rh": "RR. HH.",
+    "r3_l2": "Gestión de rutinas administrativas: headcount, vacaciones, promociones y resolución de conflictos.",
+    "r3_l3": "Cotizaciones, licitaciones, selección de proveedores y seguimiento de facturas y boletas de pago.",
+    "r3_l4": "Control de los gastos operacionales del sector, asegurando el cumplimiento del presupuesto.",
+    "r3_l5": "Gestión de compras y aprobaciones en los sistemas ERP de la empresa.",
+    "r3_l6": "Monitoreo de indicadores administrativos y operacionales como apoyo a la gestión.",
+    "r4_t": "Agente de Operaciones de Pasajeros",
+    "r4_c": "Experiencia directa con el pasajero",
+    "r4_d": "Abr 2024 — Ago 2024",
+    "r4_l1": "Atención al cliente en un entorno aeroportuario de alta demanda, garantizando eficiencia y una excelente experiencia del pasajero.",
+    "r4_l2": "Apoyé los procesos de check-in y embarque, contribuyendo al flujo operacional y a la calidad del servicio.",
+    "r4_l3": "Contribuí a la estandarización de procesos y a la consistencia en la entrega del servicio.",
+    "r5_t": "Auxiliar de Servicios Aeroportuarios",
+    "r5_c": "Base operacional",
+    "r5_d": "Sep 2021 — Mar 2024",
+    "r5_l1": "Apoyé en la gestión del flujo de pasajeros y equipajes en un aeropuerto de alto volumen.",
+    "r5_l2": "Seguí rigurosos procedimientos de seguridad y operaciones, consolidando la base operacional que sustenta mi visión práctica de los procesos aeroportuarios.",
+    "r6_t": "Joven Aprendiz",
+    "r6_c": "Primer contacto con la aviación",
+    "r6_l1": "Apoyo administrativo con archivo, digitación de datos y gestión de documentos en un entorno enfocado en el cumplimiento normativo y los estándares internacionales.",
+    "r6_l2": "Primer contacto con la cultura aeroportuaria, una experiencia que moldeó mi visión de la operación y dio inicio a toda mi trayectoria en el sector.",
+    "p_alloc": "Asignación de equipos",
+    "proj_h2": "¿Qué he construido <span class=\"lede-em\">que se usa hoy?</span>",
+    "p1_idx": "Proyecto 01",
+    "p1_kick": "Asignación digital de equipos aeroportuarios",
+    "p1_p": "Sistema que reemplazó 3 planillas manuales por una visión unificada de la operación. Participé en la arquitectura, el desarrollo y la implementación, desde el concepto hasta el uso diario en el turno.",
+    "p1_m1": "Usuarios por turno",
+    "p1_m2": "Planillas unificadas",
+    "p2_tag": "Monitoreo en tiempo real",
+    "p2_idx": "Proyecto 02",
+    "p2_kick": "Vigilancia de la programación de vuelos",
+    "p2_p": "Monitorea los cambios en la programación en tiempo real y dispara alertas automáticas por Google Chat. Desarrollo completo y soporte continuo, que permiten reasignar equipos de inmediato ante cada cambio.",
+    "p2_m1": "Vuelos por día",
+    "p2_m2": "Tiempo real",
+    "p2_m3": "Alertas por Chat",
+    "p3_tag": "Control de inventario · QR",
+    "p3_idx": "Proyecto 03",
+    "p3_kick": "Trazabilidad de equipos con código QR",
+    "p3_p": "Comenzó como una app en AppSheet con códigos QR en WFS (TPS2, TPS3 y DOT) y fue reconstruido en Next.js + Supabase para la operación de LATAM en GRU. Retiro y devolución por QR, alertas de stock mínimo y de devoluciones atrasadas, transferencias entre ubicaciones, mantenimiento e inventario cíclico.",
+    "p3_m1": "Ítems controlados",
+    "p3_m2": "Movimientos de retiro/devolución",
+    "p3_m3": "Colaboradores atendidos",
+    "p3_demo": "Ver demostración",
+    "eyebrow_vaga": "Por qué mi experiencia conecta con la vacante",
+    "vaga_h2": "¿Por qué esta vacante <span class=\"lede-em\">tiene sentido para mí?</span>",
+    "vaga_lead": "El puesto de <span class=\"lede-em\"><span data-vaga>Analista Gestión Materiales JR</span></span>, en Miami, requiere a alguien que combine datos, control de materiales y visión operacional. Ese es el camino que he venido construyendo, y quiero aplicar esta base al OPEX/CAPEX y a la logística de materiales aeronáuticos.",
+    "v1_h": "Control de materiales y equipos",
+    "v1_p": "Construí HERMES, que controla el retiro y la devolución de materiales y equipos mediante código QR: de una app en AppSheet en WFS a una plataforma en Next.js + Supabase con más de 1.100 ítems y 285.000 movimientos en la operación de LATAM en GRU.",
+    "v2_h": "Dashboards y KPIs",
+    "v2_p": "Desarrollo dashboards e indicadores en BigQuery y Looker Studio, con SQL, para entregar información consistente a la toma de decisiones. En el HCC de LATAM tengo la visión operacional de quien usa estos datos en el día a día.",
+    "v3_h": "Compras, proveedores y costos",
+    "v3_p": "En WFS me ocupé de cotizaciones, selección de proveedores, control de costos del sector y aprobaciones en ERP (TOTVS y SAP), además de implementar soluciones y capacitar a los usuarios para asegurar la continuidad tras la entrega.",
+    "eyebrow_tools": "Herramientas",
+    "tools_h2": "¿Con qué herramientas <span class=\"lede-em\">trabajo?</span>",
+    "tool_xl": "Excel Avanzado · VBA",
+    "tool_qr": "QR / Automatización",
+    "tool_ops": "Gestión de Operaciones",
+    "eyebrow_edu": "Formación e Idiomas",
+    "edu_h2": "Aprendizaje<br />continuo.",
+    "edu1_h": "Ciencias de la Computación",
+    "edu1_p": "Licenciatura en curso — Universidade Cruzeiro do Sul, Guarulhos, SP.<br />Finalización prevista: Dic 2027.",
+    "edu2_h": "Datos y Tecnología",
+    "edu2_p": "Desarrollo profesional continuo en Udemy: Looker Studio, BigQuery, Excel Avanzado, Python, SQL y Google Apps Script.",
+    "edu3_h": "Programa ARCO · CIEE",
+    "edu3_p": "Ocupaciones Administrativas — Centro de Integración Empresa-Escuela, Guarulhos, SP (Jul 2016 – Nov 2017).",
+    "eyebrow_lang": "Idiomas",
+    "lang_pt": "Portugués · Nativo",
+    "lang_en": "Inglés · Intermedio",
+    "lang_es": "Español · Básico",
+    "manif": "Mi trayectoria se construyó dentro de la operación aeroportuaria. Por eso, cuando desarrollo una solución, no pienso solo en la tecnología: pienso en <em>quién la va a usar</em>, en la decisión que debe respaldar y en el impacto que debe generar.",
+    "manif1": "Experiencia operacional",
+    "manif2": "Visión sistémica",
+    "manif3": "Soluciones digitales",
+    "eyebrow_contact": "Contacto",
+    "contact_h2": "Vamos a<br /><em>conversar.</em>",
+    "contact_sub": "Disponible para el puesto de <span data-vaga>Analista Gestión Materiales JR</span> y para cualquier conversación sobre datos y operaciones.",
+    "cl_email2": "Correo personal",
+    "cl_phone": "WhatsApp · Teléfono",
+    "cl_loc": "Ubicación",
+    "foot": "© 2026 · Analista de Datos Semisenior · LATAM Airlines",
+    "_title": "Moisés Fernandes — Analista de Datos",
+    "_desc": "Moisés Fernandes — Analista de Datos en LATAM Airlines. Dashboards y KPIs en BigQuery y Looker Studio, control de materiales con código QR (HERMES), compras, proveedores y ERP.",
+    "_ogtitle": "Moisés Fernandes — Analista de Datos",
+    "_ogdesc": "Dashboards y KPIs, control de materiales y equipos con código QR, compras y costos. Operación aeroportuaria de LATAM en GRU.",
+    "alt_heimdall": "Panel del sistema Heimdall — asignación de equipos aeroportuarios",
+    "alt_argos": "Panel del sistema ARGOS — monitoreo de vuelos en tiempo real",
+    "alt_hermes": "Aplicación Hermes — control de inventario con código QR",
   } };
 
   const VAGA = 'Analista Gestión Materiales JR';
   const applyVaga = () => document.querySelectorAll('[data-vaga]').forEach((el) => { el.textContent = VAGA; });
   applyVaga();
 
-  /* ---------- PT / EN ---------- */
+  /* ---------- PT / EN / ES ---------- */
   const i18nOrig = new WeakMap();
   const metaSel = { _desc: 'meta[name="description"]', _ogtitle: 'meta[property="og:title"]', _ogdesc: 'meta[property="og:description"]' };
   const metaOrig = { _title: document.title };
   Object.keys(metaSel).forEach((k) => { const m = document.querySelector(metaSel[k]); metaOrig[k] = m ? m.getAttribute('content') : null; });
-  const langBtn = document.getElementById('langToggle');
+  const langLinks = Array.from(document.querySelectorAll('#langSel a[data-lang]'));
+  const LANGS = ['pt', 'en', 'es'];
+  const HTML_LANG = { pt: 'pt-BR', en: 'en', es: 'es' };
   let curLang = 'pt';
   const setLang = (lang) => {
-    lang = lang === 'en' ? 'en' : 'pt';
-    const d = I18N.en;
+    lang = LANGS.indexOf(lang) > -1 ? lang : 'pt';
+    const d = lang === 'pt' ? null : I18N[lang];
     document.querySelectorAll('[data-i18n]').forEach((el) => {
       if (!i18nOrig.has(el)) i18nOrig.set(el, el.innerHTML);
       const k = el.getAttribute('data-i18n');
-      el.innerHTML = (lang === 'en' && d[k] != null) ? d[k] : i18nOrig.get(el);
+      el.innerHTML = (d && d[k] != null) ? d[k] : i18nOrig.get(el);
     });
     document.querySelectorAll('[data-i18n-alt]').forEach((el) => {
       if (!i18nOrig.has(el)) i18nOrig.set(el, el.getAttribute('alt'));
       const k = el.getAttribute('data-i18n-alt');
-      el.setAttribute('alt', (lang === 'en' && d[k] != null) ? d[k] : i18nOrig.get(el));
+      el.setAttribute('alt', (d && d[k] != null) ? d[k] : i18nOrig.get(el));
     });
-    document.title = lang === 'en' ? d._title : metaOrig._title;
+    document.title = d ? d._title : metaOrig._title;
     Object.keys(metaSel).forEach((k) => {
       const m = document.querySelector(metaSel[k]);
-      if (m && metaOrig[k] != null) m.setAttribute('content', lang === 'en' ? d[k] : metaOrig[k]);
+      if (m && metaOrig[k] != null) m.setAttribute('content', d ? d[k] : metaOrig[k]);
     });
-    document.documentElement.lang = lang === 'en' ? 'en' : 'pt-BR';
+    document.documentElement.lang = HTML_LANG[lang];
     applyVaga();
     curLang = lang;
-    if (langBtn) {
-      langBtn.textContent = lang === 'en' ? 'PT' : 'EN';
-      langBtn.setAttribute('href', lang === 'en' ? '?lang=pt' : '?lang=en');
-      langBtn.setAttribute('hreflang', lang === 'en' ? 'pt-BR' : 'en');
-      langBtn.setAttribute('lang', lang === 'en' ? 'pt-BR' : 'en');
-      langBtn.setAttribute('aria-label', lang === 'en' ? 'Mudar idioma para português' : 'Switch language to English');
-      langBtn.setAttribute('title', lang === 'en' ? 'Português' : 'English');
-    }
+    langLinks.forEach((a) => {
+      if (a.getAttribute('data-lang') === lang) a.setAttribute('aria-current', 'true');
+      else a.removeAttribute('aria-current');
+    });
   };
   const saveLang = (lang) => {
     try { localStorage.setItem('lang', lang); } catch (e) {}
     try {
       const u = new URL(location.href);
-      if (lang === 'en') u.searchParams.set('lang', 'en'); else u.searchParams.delete('lang');
+      if (lang === 'pt') u.searchParams.delete('lang'); else u.searchParams.set('lang', lang);
       history.replaceState(null, '', u.pathname + u.search + u.hash);
     } catch (e) {}
   };
-  if (langBtn) langBtn.addEventListener('click', (e) => {
+  langLinks.forEach((a) => a.addEventListener('click', (e) => {
     e.preventDefault();
-    const next = curLang === 'en' ? 'pt' : 'en';
+    const next = a.getAttribute('data-lang');
     setLang(next); saveLang(next);
-  });
+  }));
   (() => {
     let want = null;
-    try { const q = new URLSearchParams(location.search).get('lang'); if (q === 'en' || q === 'pt') want = q; } catch (e) {}
-    if (!want) { try { const l = localStorage.getItem('lang'); if (l === 'en' || l === 'pt') want = l; } catch (e) {} }
-    if (want === 'en') setLang('en');
+    try { const q = new URLSearchParams(location.search).get('lang'); if (LANGS.indexOf(q) > -1) want = q; } catch (e) {}
+    if (!want) { try { const l = localStorage.getItem('lang'); if (LANGS.indexOf(l) > -1) want = l; } catch (e) {} }
+    if (want && want !== 'pt') setLang(want);
   })();
 
   const nav = document.getElementById('nav');
